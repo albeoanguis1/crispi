@@ -17,3 +17,7 @@ a {
 border-radius: 20px;
 padding-left: 25px;
 }
+
+form {
+    padding: 20px;
+}

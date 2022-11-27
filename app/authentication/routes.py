@@ -1,4 +1,4 @@
-from forms import UserLoginForm
+from forms import UserLoginForm, UserCreationForm, EditProfileForm
 from models import User, db, check_password_hash
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
@@ -9,15 +9,16 @@ auth = Blueprint('auth', __name__, template_folder='auth_templates')
 
 @auth.route('/signup', methods = ['GET', 'POST'])
 def signup():
-    form = UserLoginForm()
+    form = UserCreationForm()
 
     try:
         if request.method == 'POST' and form.validate_on_submit():
             email = form.email.data
+            username = form.username.data
             password = form.password.data
             print(email, password)
 
-            user = User(email, password = password)
+            user = User(email, username, password = password)
 
             db.session.add(user)
             db.session.commit()
@@ -25,7 +26,7 @@ def signup():
 
 
             flash(f'You have successfully created a user account {email}', 'User-created')
-            return redirect(url_for('site.home'))
+            return redirect(url_for('auth.signin'))
 
     except:
         raise Exception('Invalid form data: Please check your form')
@@ -39,15 +40,15 @@ def signin():
     
     try:
         if request.method == 'POST' and form.validate_on_submit():
-            email = form.email.data
+            username = form.username.data
             password = form.password.data
-            print(email,password)
+            print(username,password)
 
-            logged_user = User.query.filter(User.email == email).first()
-            if logged_user and check_password_hash(logged_user.password, password):
-                login_user(logged_user)
-                flash('You were successful in your initiation. Congratulations, and welcome to the Jedi Knights', 'auth-success')
-                return redirect(url_for('site.profile'))
+            user = User.query.filter(User.username == username).first()
+            if user and check_password_hash(user.password, password):
+                login_user(user)
+                flash('Login successful', 'auth-success')
+                return redirect(url_for('site.home'))
             else:
                 flash('You do not have access to this content.', 'auth-failed')
                 return redirect(url_for('auth.signin'))

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
@@ -10,6 +10,10 @@ site = Blueprint('site', __name__, template_folder='site_templates')
 def home():
     return render_template('index.html')
 
+@site.route('/profile')
+def profile():
+    return render_template('profile.html')
+
 @site.route('/search', methods = ["GET", "POST"])
 def search():
     #TRYING TO IMPLEMENT IN JS
@@ -17,7 +21,7 @@ def search():
     url = "https://api.spoonacular.com/food/menuItems/search?"
     #Grabbing the input from the HTML form
     item = request.form.get('inputsearch')
-    print(item)
+    print(f"A user searched for: {item}")
 
     parameters = {
         'query' :{item},
@@ -36,7 +40,7 @@ def search():
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        dict= {
+        dict[item]= {
             'title': data["menuItems"][0]["title"],
             'image': data["menuItems"][0]["image"],
             'restaurant': data["menuItems"][0]["restaurantChain"],

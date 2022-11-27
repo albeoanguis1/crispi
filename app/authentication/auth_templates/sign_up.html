@@ -6,8 +6,17 @@
         <div class="row">
             <aside class="col-8 col-md-6">
                 <h2>Create Your Account Now.</h2>
-                <h4>Start Collecting today.</h4>
-                {% include 'forms.html' %}
+                <h4>Find your favorite restaurant recipe today.</h4>
+                
+                <form class="container" method="POST" action="">
+                    {{ form.hidden_tag() }}
+            
+                    {{ form.username(class='form-control', placeholder='username', autocomplete='off') }}
+                    {{ form.email(class='form-control', placeholder='email', autocomplete='off') }}
+                    {{ form.password(class='form-control', placeholder='password', autocomplete='off') }}
+                    {{ form.confirm_password(class='form-control', placeholder='confirm password', autocomplete='off') }}
+                    {{ form.submit(class=' btn btn-success') }}
+                </form>
             </aside>
         </div>
     </main>
