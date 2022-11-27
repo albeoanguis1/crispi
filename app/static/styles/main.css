@@ -1,0 +1,19 @@
+.icon::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.icon:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+#inputsearch{
+border-radius: 20px;
+padding-left: 25px;
+}

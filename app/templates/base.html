@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>a little library</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../static/css/main.css">
+    <!-- Bootstrap CSS v5.2.0-beta1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+    <script src="https://kit.fontawesome.com/b62c5ddde3.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <header>
+    <nav class=" navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <lord-icon
+          src="https://cdn.lordicon.com/zkazkzgr.json"
+          trigger="hover"
+          style="width:75px;height:75px">
+          </lord-icon>
+          <a class="navbar-brand" href="#">crispi</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarlist">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('site.home') }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">Sign-Out</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.signin') }}">Sign-in</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.signup') }}">Sign-Up</a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+  </header>
+
+  <main>
+    <!--magic jinja stuff-->
+    {% block content %}
+
+
+
+    {% endblock %}
+  </main>
+
+  <footer>
+    <!-- place footer here -->
+    <div class="container-fluid">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <h4>crispi, a resturant recipe app</h4>
+                    </div>
+                    <div class="row">
+                        <p>Thanks for coming. I don't really know what to put here. Anyways...</p>
+                    </div>
+                    <div class="flex-row d-inline-flex pb-3">
+                        <a id="poop" href="https://github.com/albeoanguis1"><i class="fa-brands fa-github fa-xl p-2"></i></a>
+                        <a id="poop" href="https://www.linkedin.com/in/antoniopopoca001/"><i class="fa-brands fa-linkedin fa-xl p-2"></i></a>
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

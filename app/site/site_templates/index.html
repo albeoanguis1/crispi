@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container p-5">
+        <div class="row d-flex justify-content-center">
+            <div>
+                <h2 class="d-flex justify-content-center">Any resturant. Any menu. Any item.</h2>
+            </div>
+            <!-- add search function here -->
+            <form action="{{ url_for('site.search') }}" method="POST">
+                <div class="mb-3">
+                  <input type="search" class="form-control" id="inputsearch" name="inputsearch" aria-describedby="searchHelp" placeholder="start your search today">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
