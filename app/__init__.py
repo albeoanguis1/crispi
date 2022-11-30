@@ -10,6 +10,8 @@ from models import db as root_db, login_manager, ma
 from flask_cors import CORS
 # from helpers import JSONEncoder
 
+from .site.routes import search
+
 app = Flask(__name__)
 CORS(app)
 
@@ -23,3 +25,6 @@ root_db.init_app(app)
 login_manager.init_app(app)
 ma.init_app(app)
 migrate = Migrate(app, root_db)
+
+#apparently doing this will allow me to call a function in jinja2
+app.jinja_env.globals.update(search=search)

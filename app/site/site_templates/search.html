@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% for key, value in dict.items() %}
         <div class="container">
             <div class="row d-flex align-items-center">
                 <div class="col justify-content-center">
                     <div class="card" style="width: 18rem;">
-                        <img src={{dict.image}} class="card-img-top" alt="{{ dict.id }}">
+                        <img src='{{ dict.image }}' class="card-img-top" alt="{{ dict.id }}">
                         <div class="card-body">
-                        <h5 class="card-title">{{ dict.title }}</h5>
+                        <h5 class="card-title">{{ test }}</h5>
                         <h6 class="card-text">{{ dict.resturant }}</h6>
                         <a href="#" class="btn btn-primary">Show me the Recipe</a>
                         </div>
@@ -15,6 +15,6 @@
                 </div>
             </div>
         </div>
-
+{% endfor %}
 
 {% endblock %}

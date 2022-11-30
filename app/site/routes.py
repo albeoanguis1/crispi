@@ -14,6 +14,7 @@ def home():
 def profile():
     return render_template('profile.html')
 
+
 @site.route('/search', methods = ["GET", "POST"])
 def search():
     #TRYING TO IMPLEMENT IN JS
@@ -35,20 +36,28 @@ def search():
     session = Session()
     session.headers.update(headers)
 
-    dict = {}
-
+    #trying to make the dictionary a global variable
+   
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        dict[item]= {
-            'title': data["menuItems"][0]["title"],
-            'image': data["menuItems"][0]["image"],
-            'restaurant': data["menuItems"][0]["restaurantChain"],
-            'id': data["menuItems"][0]["id"]
-        }
+
+        global dict
+        dict={}
+        if 'dict' in globals():
+            dict[item]= {
+                'title': data["menuItems"][0]["title"],
+                'image': data["menuItems"][0]["image"],
+                'restaurant': data["menuItems"][0]["restaurantChain"],
+                'id': data["menuItems"][0]["id"]
+            }
         print(dict)
+        # return dict[item]
         
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
 
     return render_template('search.html')
+
+
+test = 'hello'
