@@ -21,3 +21,8 @@ padding-left: 25px;
 form {
     padding: 20px;
 }
+
+#searchresults {
+    border: 1px solid orange;
+    border-radius: 60px;
+}
