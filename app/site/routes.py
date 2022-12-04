@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+from bs4 import BeautifulSoup
 import json
+
 
 
 site = Blueprint('site', __name__, template_folder='site_templates')
@@ -24,7 +26,7 @@ def search():
 
     parameters = {
         'query' :{item},
-        'number' : 10,
+        'number' : 5,
         'apiKey' : '07607f40a346438790c194f4913ce4a3'
     }
 
@@ -33,27 +35,78 @@ def search():
     }
     session = Session()
     session.headers.update(headers)
-
-    #trying to make the dictionary a global variable
    
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        # global dict
-        dict={}
-        # if 'dict' in globals():
-        dict= {
-            'title': data["menuItems"][0]["title"],
-            'image': data["menuItems"][0]["image"],
-            'restaurant': data["menuItems"][0]["restaurantChain"],
-            'servingsize': data['menuItems'][0]["readableServingSize"],
-            'id': data["menuItems"][0]["id"]
-        }
-        print(data)
-        
+        print(data['menuItems'])
+
+
+        for food in data['menuItems']:
+            print(food)
+            food = {
+                'title':food['title'],
+                'id': food['id'],
+                'image': food['image'],
+                'restaurant': food['restaurantChain'],
+                'size': food['readableServingSize']
+            }
+            #Hoping to make this a global variable so I may access this in another function.
+            global id
+            id = food['id']
+
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
 
-    return render_template('search.html', dict=dict, item=item, data=data)
+    return render_template('search.html', dict=dict, item=item, data=data, food=food, id=id)
 
 
+@site.route('/recipe', methods = ["GET", "POST"])
+def recipeinfo():
+    #its time for some soup
+    global id
+    print(id)
+    #For the summary, but we need the actaul recipe steps
+    # url = f'https://api.spoonacular.com/recipes/{id}/summary?'
+    url=f'https://api.spoonacular.com/recipes/{id}/information?'
+
+    parameters = {
+        'apiKey' : '07607f40a346438790c194f4913ce4a3'
+    }
+
+    headers = {
+        'Content-Type' : 'application/json'
+    }
+    session = Session()
+    session.headers.update(headers)
+    # dont need this anymore
+    # print(url)
+
+    try:
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        # print(response)
+        # print(data)
+
+        # to grab the ingredients
+        for ingredients in data['extendedIngredients']:
+            ingredients={
+                'name':ingredients['original'],
+            }
+            print(ingredients)
+        
+        recipeitems={}
+        recipeitems={
+            'title': data['title'],
+            'preptime': data['preparationMinutes'],
+            'cooktime':data['cookingMinutes'],
+            'servings':data['servings'],
+            'image':data['image'],
+            'instructions':data['instructions']
+        }
+        print(recipeitems)
+
+    except (ConnectionError, Timeout, TooManyRedirects) as error:
+        print(error)
+
+    return render_template('recipe.html', recipeitems=recipeitems, ingredients=ingredients)
