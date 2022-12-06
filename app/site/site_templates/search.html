@@ -8,9 +8,26 @@
     </div>
 </section>
 {% if food %}
-{%for food in data['menuItems']%}
-<div class="container"></div>
-<div class="card" style="width: 18rem;">
+{%for food in data['results']%}
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+    <div class="col-md-4">
+        <img src="{{ food['image'] }}" class="img-fluid rounded-center" alt="{{ food['id'] }}">
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+        <h5 class="card-title">{{ food['title'] }}</h5>
+        <p class="card-text" id="foodID" name="foodID"><small class="text-muted">ID: {{ food['id'] }}</small></p>
+        <a href="{{ url_for('site.recipeinfo') }}" class="btn btn-primary">Get Recipe</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<!-- This is for Tall cards withfull width pictures -->
+<!-- <div class="card mb-3" style="max-width: 540px;">
     <img src="{{ food['image'] }}" class="card-img-top" alt="{{ food['id'] }}">
     <div class="card-body">
       <h5 class="card-title">{{ food['title'] }}</h5>
@@ -19,7 +36,7 @@
       <p class="card-text" id="foodID" name="foodID">ID: {{ food['id'] }}</p>
       <a href="{{ url_for('site.recipeinfo') }}" class="btn btn-primary">Get Recipe</a>
     </div>
-</div>
+</div> -->
 {%endfor%}
 {%endif%}
 

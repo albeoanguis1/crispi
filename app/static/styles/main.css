@@ -29,3 +29,14 @@ form {
 footer{
     padding-top: 20%;
 }
+
+img{
+    border-radius: 5%;
+}
+
+#thisone{
+    margin-top: 3%;
+    box-shadow: rgba(217, 101, 0, 0.24) 0px 3px 8px;
+    border-radius: 20px;
+}
+

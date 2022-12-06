@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+{% if recipeitems %}
+<div class="container text-center">
+    <div class="row">
+      <div class="col align-self-center">
+        <div class="bigcard">
+            <div class="title">
+                <h1>{{ recipeitems['title'] }}</h1>
+            </div>
+            <div class="servinginfo">
+                <span>
+                    <h6>Preptime: {{ recipeitems['preptime'] }} minutes </h6>
+                    <h6>Cooktime: {{ recipeitems['cooktime'] }} minutes</h6>
+                    <h6>Servings: {{ recipeitems['servings'] }}</h6>
+                </span>
+            </div>
+            <div class="img">
+                <img src="{{ recipeitems['image'] }}" alt="Food!">
+            </div>
+            <div class="recipetext">
+                <p>{{ recipeitems['instructions'] }}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

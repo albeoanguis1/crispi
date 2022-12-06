@@ -2,18 +2,20 @@
 
 {% block content %}
 <section>
-    <div class="container p-5">
-        <div class="row d-flex justify-content-center">
-            <div>
-                <h2 class="d-flex justify-content-center">Any resturant. Any menu. Any item.</h2>
-            </div>
-            <!-- add search function here -->
-            <form action="{{ url_for('site.search') }}" method="POST">
-                <div class="mb-3">
-                  <input type="search" class="form-control" id="inputsearch" name="inputsearch" aria-describedby="searchHelp" placeholder="start your search today">
+    <div class="container p-5" id="thisone">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div>
+                    <h2 class="d-flex justify-content-center">Any resturant. Any menu. Any item.</h2>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <!-- add search function here -->
+                <form action="{{ url_for('site.search') }}" method="POST">
+                    <div class="mb-3">
+                    <input type="search" class="form-control" id="inputsearch" name="inputsearch" aria-describedby="searchHelp" placeholder="start your search today">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </section>

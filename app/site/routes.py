@@ -5,28 +5,30 @@ from bs4 import BeautifulSoup
 import json
 
 
-
 site = Blueprint('site', __name__, template_folder='site_templates')
 
 @site.route('/')
 def home():
     return render_template('index.html')
 
+
+
 @site.route('/profile')
 def profile():
     return render_template('profile.html')
 
 
+
 @site.route('/search', methods = ["GET", "POST"])
 def search():
-    url = "https://api.spoonacular.com/food/menuItems/search?"
+    url = "https://api.spoonacular.com/recipes/complexSearch?"
     #Grabbing the input from the HTML form
     item = request.form.get('inputsearch')
     print(f"A user searched for: {item}")
 
     parameters = {
         'query' :{item},
-        'number' : 5,
+        'number' : 10,
         'apiKey' : '07607f40a346438790c194f4913ce4a3'
     }
 
@@ -39,17 +41,14 @@ def search():
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        print(data['menuItems'])
+        print(data['results'])
 
-
-        for food in data['menuItems']:
+        for food in data['results']:
             print(food)
             food = {
                 'title':food['title'],
                 'id': food['id'],
-                'image': food['image'],
-                'restaurant': food['restaurantChain'],
-                'size': food['readableServingSize']
+                'image': food['image']
             }
             #Hoping to make this a global variable so I may access this in another function.
             global id
@@ -59,6 +58,7 @@ def search():
         print(error)
 
     return render_template('search.html', dict=dict, item=item, data=data, food=food, id=id)
+
 
 
 @site.route('/recipe', methods = ["GET", "POST"])
