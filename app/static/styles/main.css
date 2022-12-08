@@ -40,3 +40,24 @@ img{
     border-radius: 20px;
 }
 
+li {
+    list-style-type: none;
+}
+
+.bigcard {
+    background-color: lightgray;
+    border-radius: 15px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.ingredientstext{
+    padding-top: 1%;
+}
+
+.recipetext{
+    padding-top: 1%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 2%;
+}

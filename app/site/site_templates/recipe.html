@@ -19,7 +19,16 @@
             <div class="img">
                 <img src="{{ recipeitems['image'] }}" alt="Food!">
             </div>
+            <div class="ingredientstext">
+                <h3>Ingredients:</h3>
+                <ul>
+                    {% for ingredient in ingredients %}
+                      <li>{{ ingredient }}</li>
+                    {% endfor %}
+                  </ul>
+            </div>
             <div class="recipetext">
+                <h3>What to do:</h3>
                 <p>{{ recipeitems['instructions'] }}</p>
             </div>
         </div>
@@ -27,5 +36,7 @@
     </div>
 </div>
 {% endif %}
+
+
 
 {% endblock %}

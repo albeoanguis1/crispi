@@ -3,7 +3,9 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from bs4 import BeautifulSoup
 import json
-
+import re
+from bs4 import BeautifulSoup
+from jinja2 import Environment
 
 site = Blueprint('site', __name__, template_folder='site_templates')
 
@@ -88,13 +90,20 @@ def recipeinfo():
         # print(response)
         # print(data)
 
-        # to grab the ingredients
-        for ingredients in data['extendedIngredients']:
-            ingredients={
-                'name':ingredients['original'],
-            }
-            print(ingredients)
-        
+        # create an empty array to store the ingredients
+        ingredients = []
+        for ingredient in data['extendedIngredients']:
+            # access the value of the 'original' field for each ingredient
+            original = ingredient['original']
+            ingredients.append(original)
+            print(original)
+
+        # Cleaning data'instructions' since the response includes html tags that I do not want
+        soup = BeautifulSoup(data['instructions'], 'html.parser')
+        # extract the instructions text from the parsed data
+        instructions = soup.get_text()
+        newinstructions = instructions.replace(re.escape('.'), '.\n')
+
         recipeitems={}
         recipeitems={
             'title': data['title'],
@@ -102,7 +111,7 @@ def recipeinfo():
             'cooktime':data['cookingMinutes'],
             'servings':data['servings'],
             'image':data['image'],
-            'instructions':data['instructions']
+            'instructions': newinstructions
         }
         print(recipeitems)
 
