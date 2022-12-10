@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
+from flask_login import login_required, current_user
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from bs4 import BeautifulSoup
@@ -6,6 +7,7 @@ import json
 import re
 from bs4 import BeautifulSoup
 from jinja2 import Environment
+from models import User, Recipebook, db
 
 site = Blueprint('site', __name__, template_folder='site_templates')
 
@@ -55,6 +57,8 @@ def search():
             #Hoping to make this a global variable so I may access this in another function.
             global id
             id = food['id']
+            global title
+            title = food['title']
 
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
@@ -65,8 +69,9 @@ def search():
 
 @site.route('/recipe', methods = ["GET", "POST"])
 def recipeinfo():
-    #its time for some soup
-    global id
+    # global id
+    # global id only grabs the last item from the query, not the corresponding so:
+    id = request.args.get('id')
     print(id)
     #For the summary, but we need the actaul recipe steps
     # url = f'https://api.spoonacular.com/recipes/{id}/summary?'
@@ -97,7 +102,7 @@ def recipeinfo():
             original = ingredient['original']
             ingredients.append(original)
             print(original)
-
+        # ITS SOUP TIME
         # Cleaning data'instructions' since the response includes html tags that I do not want
         soup = BeautifulSoup(data['instructions'], 'html.parser')
         # extract the instructions text from the parsed data
@@ -119,3 +124,22 @@ def recipeinfo():
         print(error)
 
     return render_template('recipe.html', recipeitems=recipeitems, ingredients=ingredients)
+
+
+
+@site.route('/recipe/save', methods=["GET", "POST"])
+# @login_required
+def save_recipe():
+    #import global variables of title and id into this function
+    global id
+    global title
+
+    # get the current user's id value
+    user_id = current_user.id
+
+    # insert the record into the recipebook table
+    recipe = Recipebook(title=title, id=id, user_id=user_id)
+    db.session.add(recipe)
+    db.session.commit()
+
+    return jsonify({'message': 'Recipe added successfully'})

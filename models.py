@@ -7,6 +7,7 @@ from flask_login import UserMixin
 from flask_login import LoginManager
 from flask_marshmallow import Marshmallow 
 import secrets
+from sqlalchemy.orm import relationship
 
 # set variables for class instantiation
 login_manager = LoginManager()
@@ -51,3 +52,20 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'User {self.email} has been added to the database'
+
+class Recipebook(db.Model):
+    local_id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(db.String(200), nullable=False, unique=False)
+    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable=False, default=1)
+    id = db.Column(db.Integer, nullable=False)
+    date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+
+    def __init__(self, title, id, user_id=None):
+        self.title = title
+        self.id = id
+
+    
+    user = relationship('User', backref='recipebook', lazy=True)
+
+    

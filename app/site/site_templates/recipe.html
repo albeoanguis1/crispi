@@ -31,6 +31,9 @@
                 <h3>What to do:</h3>
                 <p>{{ recipeitems['instructions'] }}</p>
             </div>
+            <div class="savebtn">
+                <a href="{{ url_for('site.save_recipe') }}" class="btn btn-primary">Save Recipe</a>
+            </div>
         </div>
       </div>
     </div>

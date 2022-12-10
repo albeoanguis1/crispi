@@ -19,24 +19,12 @@
         <div class="card-body">
         <h5 class="card-title">{{ food['title'] }}</h5>
         <p class="card-text" id="foodID" name="foodID"><small class="text-muted">ID: {{ food['id'] }}</small></p>
-        <a href="{{ url_for('site.recipeinfo') }}" class="btn btn-primary">Get Recipe</a>
+        <a href="{{ url_for('site.recipeinfo', id=food['id']) }}" class="btn btn-primary">Get Recipe</a>
         </div>
     </div>
     </div>
 </div>
 
-
-<!-- This is for Tall cards withfull width pictures -->
-<!-- <div class="card mb-3" style="max-width: 540px;">
-    <img src="{{ food['image'] }}" class="card-img-top" alt="{{ food['id'] }}">
-    <div class="card-body">
-      <h5 class="card-title">{{ food['title'] }}</h5>
-      <p class="card-text">Restaurant: {{ food['restaurant'] }} </p>
-      <p class="card-text">Serving Size: {{ food['size'] }} </p>
-      <p class="card-text" id="foodID" name="foodID">ID: {{ food['id'] }}</p>
-      <a href="{{ url_for('site.recipeinfo') }}" class="btn btn-primary">Get Recipe</a>
-    </div>
-</div> -->
 {%endfor%}
 {%endif%}
 
