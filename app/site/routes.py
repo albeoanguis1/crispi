@@ -7,7 +7,7 @@ import json
 import re
 from bs4 import BeautifulSoup
 from jinja2 import Environment
-from models import User, Recipebook, db
+from models import User, SavedRecipes, db
 
 site = Blueprint('site', __name__, template_folder='site_templates')
 
@@ -59,6 +59,8 @@ def search():
             id = food['id']
             global title
             title = food['title']
+            global image
+            image = food['image']
 
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
@@ -72,7 +74,7 @@ def recipeinfo():
     # global id
     # global id only grabs the last item from the query, not the corresponding so:
     id = request.args.get('id')
-    print(id)
+    print(f"Recipe ID: {id}")
     #For the summary, but we need the actaul recipe steps
     # url = f'https://api.spoonacular.com/recipes/{id}/summary?'
     url=f'https://api.spoonacular.com/recipes/{id}/information?'
@@ -128,18 +130,20 @@ def recipeinfo():
 
 
 @site.route('/recipe/save', methods=["GET", "POST"])
-# @login_required
+@login_required
 def save_recipe():
-    #import global variables of title and id into this function
-    global id
-    global title
+    pass
+    # #import global variables of title and id into this function
+    # global id
+    # global title
+    # global image
 
-    # get the current user's id value
-    user_id = current_user.id
-
-    # insert the record into the recipebook table
-    recipe = Recipebook(title=title, id=id, user_id=user_id)
-    db.session.add(recipe)
-    db.session.commit()
-
-    return jsonify({'message': 'Recipe added successfully'})
+    # if request.method == "POST":
+    #     # Insert the record into the recipebook table
+    #     recipe = SavedRecipes(title=title, img_url=image, user_id=current_user.id)
+    #     db.session.add(recipe)
+    #     db.session.commit()
+    #     return jsonify({'message': 'Recipe added successfully'})
+    # else:
+    #     # The user_id does not exist in the user table
+    #     return jsonify({'message': 'Error: user_id does not exist in the user table'})

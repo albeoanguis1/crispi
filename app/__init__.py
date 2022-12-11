@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 from config import Config
-from .api.routes import *
 from .site.routes import site
 from .authentication.routes import auth
 
