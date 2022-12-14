@@ -132,18 +132,17 @@ def recipeinfo():
 @site.route('/recipe/save', methods=["GET", "POST"])
 @login_required
 def save_recipe():
-    pass
-    # #import global variables of title and id into this function
-    # global id
-    # global title
-    # global image
+    #import global variables of title and id into this function
+    global id
+    global title
+    global image
 
-    # if request.method == "POST":
-    #     # Insert the record into the recipebook table
-    #     recipe = SavedRecipes(title=title, img_url=image, user_id=current_user.id)
-    #     db.session.add(recipe)
-    #     db.session.commit()
-    #     return jsonify({'message': 'Recipe added successfully'})
-    # else:
-    #     # The user_id does not exist in the user table
-    #     return jsonify({'message': 'Error: user_id does not exist in the user table'})
+    if request.method == "POST":
+        # Insert the record into the recipebook table
+        recipe = SavedRecipes(title=title, img_url=image, user_id=current_user.id)
+        db.session.add(recipe)
+        db.session.commit()
+        return jsonify({'message': 'Recipe added successfully'})
+    else:
+        # The user_id does not exist in the user table
+        return jsonify({'message': 'Error: user_id does not exist in the user table'})

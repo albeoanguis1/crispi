@@ -18,54 +18,43 @@ def load_user(uid):
     return User.query.get(uid)
 
 recipes = db.Table('recipes',
-    db.Column('user_id', db.String(50), db.ForeignKey('user.uid')),
-    db.Column('recipe_id', db.String(50), db.ForeignKey('user.uid'))
+    db.Column('user_id', db.String(50), db.ForeignKey('user.id')),
+    db.Column('recipe_id', db.String(50), db.ForeignKey('user.id'))
 )
 
 
+
 class User(db.Model, UserMixin):
-    uid = db.Column(db.String(50), primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=str(uuid.uuid4()))
     username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(150), nullable = False, unique=True)
-    password = db.Column(db.String(150), nullable = True, default = '')
-    # g_auth_verify = db.Column(db.Boolean, default = False)
-    # token = db.Column(db.String, default = '', unique = True )
-    
+    password = db.Column(db.String(150), nullable = True)
 
     saved = db.relationship("SavedRecipes", backref='user', lazy=True)
     saved_recipe = db.relationship('User',
-        primaryjoin = (recipes.c.user_id==uid),
-        secondaryjoin = (recipes.c.recipe_id==uid),
+        primaryjoin = (recipes.c.user_id==id),
+        secondaryjoin = (recipes.c.recipe_id==id),
         secondary = recipes,
         backref = db.backref('user_recipes', lazy='dynamic'),
         lazy = 'dynamic'
         )
 
-
-    def __init__(self, uid, email,username, password=''):
-        self.uid = uid
+    def __init__(self, username, password, email):
         self.username = username
-        self.password = password
+        self.password = generate_password_hash(password)
         self.email = email
-        # self.g_auth_verify = g_auth_verify
+    
+    def get_id(self):
+        return self.id
 
     def set_token(self, length):
         return secrets.token_hex(length)
 
-    # def set_id(self):
-    #     return str(uuid.uuid4())
-    
-    # def set_password(self, password):
-    #     self.pw_hash = generate_password_hash(password)
-    #     return self.pw_hash
-    
     def updateUserInfo(self, username, email, password):
         self.username = username
         self.email = email
         self.password = password
 
-    def __repr__(self):
-        return f'User {self.email} has been added to the database'
 
 
 class SavedRecipes(db.Model):
@@ -76,7 +65,7 @@ class SavedRecipes(db.Model):
     cooktime = db.Column(db.String(30), nullable=True)
     servings = db.Column(db.String(30), nullable=True)
     instructions = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.String(50), db.ForeignKey('user.uid'), nullable=False)
+    user_id = db.Column(db.String(50), db.ForeignKey('user.id'), nullable=False)
 
     def __init__(self, rid, title, img_url, preptime, cooktime, servings, instructions, user_id):
         self.rid = rid
