@@ -42,13 +42,14 @@ def signin():
             password = form.password.data
             print(f'A user tried to login.\nUsername: {username}\nPassword: {password}')
 
-            user = User.query.filter(username == username).first()
-            print(f'User.username from DB:{user.username}\nUsername from form:')
+            user = User.query.filter(User.username == username).first()
+            print(f'User.username from DB: {user.username}\nUsername from form: {username}')
             
             if user:
-                if check_password_hash(user.password, password):
-                    login_user(user)
-                    print(f'{username} has logged in!')
+                print(check_password_hash(user.password, password))
+                # if check_password_hash(user.password, password):
+                login_user(user)
+                print(f'{username} has logged in!')
                 return redirect(url_for('site.home'))
 
             else:
