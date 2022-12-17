@@ -61,3 +61,36 @@ li {
     padding-right: 10%;
     padding-bottom: 2%;
 }
+
+footer{
+    position: relative;
+}
+
+#footerpoop{
+    z-index: -1000;
+}
+
+#realfooter{
+    z-index: 1000;
+}
+
+.custom-shape-divider-bottom-1671068767 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1671068767 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 250px;
+}
+
+.custom-shape-divider-bottom-1671068767 .shape-fill {
+    fill: #FAAB78;
+}

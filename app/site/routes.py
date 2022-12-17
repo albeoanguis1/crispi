@@ -55,12 +55,12 @@ def search():
                 'image': food['image']
             }
             #Hoping to make this a global variable so I may access this in another function.
-            global id
-            id = food['id']
-            global title
-            title = food['title']
-            global image
-            image = food['image']
+            global varid
+            varid= food['id']
+            global vartitle
+            vartitle = food['title']
+            global varimage
+            varimage = food['image']
 
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
@@ -133,16 +133,25 @@ def recipeinfo():
 @login_required
 def save_recipe():
     #import global variables of title and id into this function
-    global id
-    global title
-    global image
+    varid
+    print(varid)
+    vartitle
+    print(vartitle)
+    varimage
+    print(varimage)
 
-    if request.method == "POST":
-        # Insert the record into the recipebook table
-        recipe = SavedRecipes(title=title, img_url=image, user_id=current_user.id)
-        db.session.add(recipe)
-        db.session.commit()
-        return jsonify({'message': 'Recipe added successfully'})
-    else:
-        # The user_id does not exist in the user table
-        return jsonify({'message': 'Error: user_id does not exist in the user table'})
+    recipe = SavedRecipes(rid=varid,title=vartitle, img_url=varimage, user_id=current_user.id)
+    db.session.add(recipe)
+    db.session.commit()
+    print('Recipe added successfully')
+    return render_template('profile.html')
+
+
+
+@site.route('/profile/savedrecipes')
+@login_required
+def display_saved():
+    pass
+
+
+    return render_template(profile.html)
