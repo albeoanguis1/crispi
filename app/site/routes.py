@@ -18,8 +18,14 @@ def home():
 
 
 @site.route('/profile')
+@login_required
 def profile():
-    return render_template('profile.html')
+    if current_user:
+        retrieved = db.session.query(SavedRecipes).all()
+        print(retrieved)
+
+
+    return render_template('profile.html', data=retrieved)
 
 
 
@@ -148,10 +154,12 @@ def save_recipe():
 
 
 
-@site.route('/profile/savedrecipes')
-@login_required
-def display_saved():
-    pass
+# @site.route('/profile/recipes', methods=['GET', 'POST'])
+# @login_required
+# def display_saved():
+#     if current_user:
+#         retrieved = db.session.query(SavedRecipes).all()
+#         print(retrieved)
 
 
-    return render_template(profile.html)
+#     return render_template('profile.html', data=retrieved)

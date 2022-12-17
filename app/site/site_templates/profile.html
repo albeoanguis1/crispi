@@ -25,13 +25,22 @@
             </div>
 
     </div>
+    
     <div class="row" style="margin-top: 20px;">
-        <div class="col-4"></div>
-        <div class="col-3 p-10">
-            <img src="" class="d-flex align-items-center justify-content-center p-50 img-fluid" alt="">
+        {% if current_user.is_authenticated %}
+        {% for item in data %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{item.img_url}}" class="card-img-top" alt="{{item.rid}}">
+            <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <button type="button" class="btn btn-warning">Delete</button>
+
+            </div>
         </div>
-        <div class="col-3"></div>
+        {% endfor %}
+        {% endif %}
     </div>
+  
 </div>
 </section>
 {% endblock %}
