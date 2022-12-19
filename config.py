@@ -15,3 +15,4 @@ class Config():
     SECRET_KEY = os.environ.get('SECRET_KEY') or ('Work you piece of shit')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
     SQLALCHEMY_TRACK_NOTIFICATIONS = False
+    
