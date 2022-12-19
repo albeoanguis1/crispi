@@ -67,13 +67,13 @@ class SavedRecipes(db.Model):
     instructions = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.String(50), db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, rid, title, img_url, user_id):
+    def __init__(self, rid, title, img_url, preptime, cooktime, servings, user_id):
         self.rid = rid
         self.title = title
         self.img_url = img_url
-        # self.preptime = preptime
-        # self.cooktime = cooktime
-        # self.servings = servings
+        self.preptime = preptime
+        self.cooktime = cooktime
+        self.servings = servings
         # self.instructions = instructions
         self.user_id = user_id
 

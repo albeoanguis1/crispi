@@ -128,6 +128,13 @@ def recipeinfo():
         }
         print(recipeitems)
 
+        global varprep 
+        varprep = recipeitems['preptime']
+        global vartime
+        vartime = recipeitems['cooktime']
+        global varservings
+        varservings = recipeitems['servings']
+
     except (ConnectionError, Timeout, TooManyRedirects) as error:
         print(error)
 
@@ -145,8 +152,11 @@ def save_recipe():
     print(vartitle)
     varimage
     print(varimage)
+    varprep
+    vartime
+    varservings
 
-    recipe = SavedRecipes(rid=varid,title=vartitle, img_url=varimage, user_id=current_user.id)
+    recipe = SavedRecipes(rid=varid,title=vartitle, img_url=varimage, user_id=current_user.id, preptime=varprep, cooktime=vartime, servings=varservings)
     db.session.add(recipe)
     db.session.commit()
     print('Recipe added successfully')
@@ -154,12 +164,14 @@ def save_recipe():
 
 
 
-# @site.route('/profile/recipes', methods=['GET', 'POST'])
-# @login_required
-# def display_saved():
-#     if current_user:
-#         retrieved = db.session.query(SavedRecipes).all()
-#         print(retrieved)
+@site.route('/recipe/<int:recipe_id>/delete', methods=['DELETE','GET', 'POST'])
+@login_required
+def delete_recipe(recipe_id):
+    if current_user:
+        recipe = SavedRecipes.query.filter_by(rid = recipe_id).first()
+        print(recipe)
+        db.session.delete(recipe)
+        db.session.commit()
 
 
-#     return render_template('profile.html', data=retrieved)
+    return render_template('profile.html')

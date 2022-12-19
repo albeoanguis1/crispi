@@ -32,9 +32,12 @@
         <div class="card" style="width: 18rem;">
             <img src="{{item.img_url}}" class="card-img-top" alt="{{item.rid}}">
             <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <button type="button" class="btn btn-warning">Delete</button>
-
+                <h4>{{item.title}}</h4>
+                <p class="card-text">Preptime: {{item.preptime}}</p>
+                <p class="card-text">Cooktime: {{item.cooktime}}</p>
+                <p class="card-text">Servigns: {{item.servings}} </p>
+                <a type="button" href="{{ url_for('site.delete_recipe', recipe_id=item.rid) }}" class="btn btn-warning"
+                onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</a>
             </div>
         </div>
         {% endfor %}
