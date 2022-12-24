@@ -15,7 +15,9 @@ site = Blueprint('site', __name__, template_folder='site_templates')
 def home():
     return render_template('index.html')
 
-
+@site.route('/about')
+def about():
+    return render_template('about.html')
 
 @site.route('/profile')
 @login_required

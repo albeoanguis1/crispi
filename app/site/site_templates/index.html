@@ -2,20 +2,29 @@
 
 {% block content %}
 <section>
-    <div class="container p-5" id="thisone">
-        <div class="container">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div>
-                    <h2 class="d-flex justify-content-center">Any resturant. Any menu. Any item.</h2>
-                </div>
-                <!-- add search function here -->
-                <form action="{{ url_for('site.search') }}" method="POST">
-                    <div class="mb-3">
-                    <input type="search" class="form-control" id="inputsearch" name="inputsearch" aria-describedby="searchHelp" placeholder="start your search today">
+    <div class="row">
+        <div class="col d-flex align-items-center" id="thisone">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <span class="d-flex justify-content-center">
+                        <h4>Need help finding <em>that</em> recipe? </h4>
+                        <h3> We're here to help.</h3>
+                        </span>
+                        <h1 class="d-flex justify-content-center">Any resturant. Any menu. Any item.</h1>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                    <!-- add search function here -->
+                    <form action="{{ url_for('site.search') }}" method="POST">
+                        <div class="mb-3">
+                        <input type="search" class="form-control" id="inputsearch" name="inputsearch" aria-describedby="searchHelp" placeholder="start your search today">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <img src="../../static/images/undraw_barbecue_3x93.svg" id="barbieman">
         </div>
     </div>
 </section>

@@ -36,6 +36,7 @@ img{
 
 #thisone{
     margin-top: 3%;
+    margin-left: 3em;
     box-shadow: rgba(217, 101, 0, 0.24) 0px 3px 8px;
     border-radius: 20px;
 }
@@ -93,4 +94,17 @@ footer{
 
 .custom-shape-divider-bottom-1671068767 .shape-fill {
     fill: #FAAB78;
+}
+
+#aboutimg1{
+    width: 50%
+}
+
+#aboutimg2{
+    width: 35%;
+}
+
+#barbieman{
+    width: 60%;
+    padding-top: 2em;
 }
